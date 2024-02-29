@@ -73,13 +73,17 @@ Event* NotGate::update(uint64_t time)
   Event* e = nullptr;
 
   char input = m_inputs[0]->getState();
-  char newC = 'X';
+  char newC;
 
-  if (input == 'O')
+  if (input == 'X')
+  {
+    newC = 'X';
+  }
+  else if (input == '0')
   {
     newC = '1';
   }
-  else if (input == '1')
+  else
   {
     newC = '0';
   }
