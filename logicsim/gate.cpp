@@ -61,6 +61,37 @@ Or2Gate::Or2Gate(Wire* a, Wire* b, Wire* o) : Gate(2,o)
     wireInput(1,b);
 }
 
+NotGate::NotGate(Wire* in, Wire* out) : Gate(1, out)
+{
+  m_inputs.push_back(in);
+}
+Event* NotGate::update(uint64_t time)
+{
+  Event* n = nullptr;
+  char input = m_inputs[0]->getState();
+  char newC;
+  if (input == 'X')
+  {
+    newC = 'X';
+  }
+  else if (input == 'O')
+  {
+    newC = '1';
+  }
+  else if (input == '1')
+  {
+    newC = '0';
+  }
+  else
+  {
+    newC = 'X';
+  }
+
+  n = new Event {time + m_delay, m_output, newC};
+  return n;
+
+}
+
 Event* Or2Gate::update(uint64_t current_time)
 {
     

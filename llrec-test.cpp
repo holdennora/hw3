@@ -67,8 +67,36 @@ void dealloc(Node* head)
 //   function object struct declarations
 // -----------------------------------------------
 
+// All structs taken from llrec_tests.cpp
+struct IsOdd
+  {
+    bool operator()(int num) {
+        return (num % 2) != 0;
+    }
+};
 
-
+struct IsEven
+{
+    bool operator()(int num) {
+        return (num % 2) == 0;
+    }
+};
+struct IsGreater
+{
+	int num2;
+	IsGreater(int val) : num2(val){}
+    bool operator()(int num1) {
+        return (num1 > num2);
+    }
+};
+struct IsLessEquals
+{
+	int num2;
+	IsLessEquals(int val) : num2(val){}
+    bool operator()(int num1) {
+        return (num1 <= num2);
+    }
+};
 
 
 int main(int argc, char* argv[])
@@ -82,14 +110,63 @@ int main(int argc, char* argv[])
     // Feel free to update any code below this point
     // -----------------------------------------------
     Node* head = readList(argv[1]);
+    Node* head2 = readList(argv[1]);
+    Node* head3 = readList(argv[1]);
+    Node* head4 = readList(argv[1]);
+
     cout << "Original list: ";
     print(head);
+    cout << endl;
 
-    // Test out your linked list code
+    /*
+    // PIVOT
+    Node* smaller = nullptr;
+    Node* larger = nullptr;
+    int pivot = 10;
+
+    llpivot(head, smaller, larger, pivot);
+
+    cout << "Smaller list:" << endl;
+    Node* curr = smaller;
+    print(curr);
+    dealloc(smaller);
+
+    cout << "Larger list:" << endl;
+    Node* curr2 = larger;
+    print(curr2);
+    dealloc(larger);
+    */
+
+  // FILTER
+  head = llfilter(head, IsOdd());
+  cout << "Evens only: " << endl;
+  print(head);
+  cout << endl;
+  dealloc(head);
+
+  head2 = llfilter(head2, IsEven());
+  cout << "Odds only: " << endl;
+  print(head2);
+  cout << endl;
+  dealloc(head2);
+
+  head3 = llfilter(head3, IsGreater(8));
+  cout << "Less than or equal to 8 only: " << endl;
+  print(head3);
+  cout << endl;
+  dealloc(head3);
+
+  head4 = llfilter(head4, IsLessEquals(8));
+  cout << "Greater than 8 only: " << endl;
+  print(head4);
+  cout << endl;
+  dealloc(head4);
+  
+
+  
 
 
 
-    
-    return 0;
+  return 0;
 
 }
